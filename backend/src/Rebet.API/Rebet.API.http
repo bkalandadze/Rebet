@@ -1,0 +1,180 @@
+@Rebet.API_HostAddress = http://localhost:5189
+@Token = 
+
+### ============================================
+### AUTHENTICATION
+### ============================================
+
+### Login (use any seeded user: user1@test.com through user200@test.com, password: Test123!)
+POST {{Rebet.API_HostAddress}}/api/v1/auth/login
+Content-Type: application/json
+
+{
+  "email": "user1@test.com",
+  "password": "Test123!"
+}
+
+### Register New User
+POST {{Rebet.API_HostAddress}}/api/v1/auth/register
+Content-Type: application/json
+
+{
+  "email": "newuser@test.com",
+  "password": "SecurePass123!",
+  "firstName": "New",
+  "lastName": "User",
+  "displayName": "NewUser",
+  "dateOfBirth": "1990-01-15",
+  "country": "US"
+}
+
+### ============================================
+### EVENTS (No Auth Required)
+### ============================================
+
+### Get All Events
+GET {{Rebet.API_HostAddress}}/api/v1/events?page=1&pageSize=20
+Accept: application/json
+
+### Get Events by Sport
+GET {{Rebet.API_HostAddress}}/api/v1/events?sport=Football&page=1&pageSize=20
+Accept: application/json
+
+### Get Events by League
+GET {{Rebet.API_HostAddress}}/api/v1/events?league=Premier League&page=1&pageSize=20
+Accept: application/json
+
+### Get Events by Status
+GET {{Rebet.API_HostAddress}}/api/v1/events?status=Scheduled&page=1&pageSize=20
+Accept: application/json
+
+### Get Event by ID (replace {eventId} with actual ID)
+GET {{Rebet.API_HostAddress}}/api/v1/events/{eventId}
+Accept: application/json
+
+### ============================================
+### EXPERTS (No Auth Required)
+### ============================================
+
+### Get All Experts
+GET {{Rebet.API_HostAddress}}/api/v1/experts?page=1&pageSize=20
+Accept: application/json
+
+### Get Experts by Tier
+GET {{Rebet.API_HostAddress}}/api/v1/experts?tier=Gold&page=1&pageSize=20
+Accept: application/json
+
+### Get Experts by Specialization
+GET {{Rebet.API_HostAddress}}/api/v1/experts?specialization=Football&page=1&pageSize=20
+Accept: application/json
+
+### Get Expert by ID (replace {expertId} with actual ID)
+GET {{Rebet.API_HostAddress}}/api/v1/experts/{expertId}
+Accept: application/json
+
+### ============================================
+### POSITIONS (Auth Required)
+### ============================================
+
+### Get All Positions
+GET {{Rebet.API_HostAddress}}/api/v1/positions?page=1&pageSize=20
+Authorization: Bearer {{Token}}
+Accept: application/json
+
+### Get Positions by Expert
+GET {{Rebet.API_HostAddress}}/api/v1/positions?expertId={expertId}&page=1&pageSize=20
+Authorization: Bearer {{Token}}
+Accept: application/json
+
+### Get Position by ID
+GET {{Rebet.API_HostAddress}}/api/v1/positions/{positionId}
+Authorization: Bearer {{Token}}
+Accept: application/json
+
+### Create Position (replace with actual eventId)
+POST {{Rebet.API_HostAddress}}/api/v1/positions
+Authorization: Bearer {{Token}}
+Content-Type: application/json
+
+{
+  "sportEventId": "00000000-0000-0000-0000-000000000000",
+  "market": "Match Result",
+  "selection": "Home Win",
+  "odds": 2.50,
+  "analysis": "Strong home team advantage based on recent form"
+}
+
+### Vote on Position
+POST {{Rebet.API_HostAddress}}/api/v1/positions/{positionId}/vote
+Authorization: Bearer {{Token}}
+Content-Type: application/json
+
+{
+  "type": "Upvote"
+}
+
+### ============================================
+### TICKETS (Auth Required)
+### ============================================
+
+### Get All Tickets
+GET {{Rebet.API_HostAddress}}/api/v1/tickets?page=1&pageSize=20
+Authorization: Bearer {{Token}}
+Accept: application/json
+
+### Get Tickets by Expert
+GET {{Rebet.API_HostAddress}}/api/v1/tickets?expertId={expertId}&page=1&pageSize=20
+Authorization: Bearer {{Token}}
+Accept: application/json
+
+### Get Ticket by ID
+GET {{Rebet.API_HostAddress}}/api/v1/tickets/{ticketId}
+Authorization: Bearer {{Token}}
+Accept: application/json
+
+### Create Ticket
+POST {{Rebet.API_HostAddress}}/api/v1/tickets
+Authorization: Bearer {{Token}}
+Content-Type: application/json
+
+{
+  "title": "Weekend Accumulator",
+  "description": "Carefully selected picks for the weekend",
+  "type": "Multi",
+  "stake": 50.00,
+  "visibility": "Public",
+  "entries": [
+    {
+      "sportEventId": "00000000-0000-0000-0000-000000000000",
+      "market": "Match Result",
+      "selection": "Home Win",
+      "odds": 2.00
+    }
+  ]
+}
+
+### ============================================
+### NEWSFEED (Auth Required)
+### ============================================
+
+### Get Newsfeed
+GET {{Rebet.API_HostAddress}}/api/v1/newsfeed?page=1&pageSize=20
+Authorization: Bearer {{Token}}
+Accept: application/json
+
+### Get Newsfeed by Type
+GET {{Rebet.API_HostAddress}}/api/v1/newsfeed?type=NewTicket&page=1&pageSize=20
+Authorization: Bearer {{Token}}
+Accept: application/json
+
+### ============================================
+### WINNERS (No Auth Required)
+### ============================================
+
+### Get Top Winners
+GET {{Rebet.API_HostAddress}}/api/v1/winners?period=Last7Days&page=1&pageSize=20
+Accept: application/json
+
+### Get Winners by Period
+GET {{Rebet.API_HostAddress}}/api/v1/winners?period=Last30Days&page=1&pageSize=20
+Accept: application/json

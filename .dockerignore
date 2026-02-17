@@ -1,0 +1,22 @@
+# Build outputs (avoid copying Windows obj/bin with baked-in NuGet paths)
+**/obj
+**/bin
+**/out
+
+# Git and IDE
+.git
+.gitignore
+.vs
+.vscode
+*.user
+*.suo
+
+# Docker
+Dockerfile*
+.dockerignore
+docker-compose*
+*.md
+
+# Misc
+**/node_modules
+**/*.log
